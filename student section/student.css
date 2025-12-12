@@ -1,0 +1,343 @@
+/*
+ * Student Dashboard Styles (student_style.css)
+ * Implements the clean, light, and official design requested.
+ */
+
+/* --- Base Dashboard Layout (Light Theme - Official Look) --- */
+body#student-page {
+    background-color: #f0f2f5; /* Very light grey background */
+    display: block; 
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Professional font */
+    color: #333;
+    min-height: 100vh;
+}
+.dashboard-container {
+    display: flex;
+    min-height: calc(100vh - 60px); /* Adjust for header height */
+}
+
+/* --- Top Header --- */
+.top-header {
+    background: #ffffff; /* White Header */
+    color: #333;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+.logout-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: background 0.3s;
+}
+.logout-btn:hover {
+    background: #c0392b;
+}
+.notification-icon i {
+    font-size: 24px;
+    color: #f39c12; /* Notifications */
+    cursor: pointer;
+}
+
+/* --- Sidebar Navigation --- */
+.sidebar {
+    width: 240px;
+    background: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    padding-top: 20px;
+    border-right: 1px solid #eee;
+}
+.profile-summary {
+    text-align: center;
+    padding: 10px 0 20px;
+    margin: 0 15px;
+    border-bottom: 1px solid #eee;
+}
+.profile-pic-sidebar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border: 3px solid #3498db; /* Theme color border */
+}
+.text-secondary { 
+    font-size: 0.9em; 
+    color: #7f8c8d; 
+}
+
+.sidebar ul { 
+    list-style: none; 
+    padding-top: 10px; 
+}
+.sidebar li {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    cursor: pointer;
+    color: #333;
+    transition: background 0.2s;
+    font-size: 15px;
+}
+.sidebar li i { 
+    margin-right: 10px; 
+    font-size: 18px; 
+    color: #7f8c8d; 
+    transition: color 0.2s;
+}
+.sidebar li:hover, .sidebar li.active {
+    background: #e9f2fb; /* Very light blue background on hover/active */
+    color: #3498db;
+    border-left: 4px solid #3498db;
+}
+.sidebar li.active i { 
+    color: #3498db; 
+}
+
+/* --- Main Content Area --- */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+.content-section {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+.hidden { 
+    display: none; 
+}
+.details-heading {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #34495e;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    font-size: 1.1em;
+}
+
+/* --- Dashboard & Stats --- */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+.stat-card {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.stat-card i {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.stat-card.room { background: #e8f5e9; color: #388e3c; } /* Light green */
+.stat-card.year { background: #fff3e0; color: #f57c00; } /* Light orange */
+.stat-card.due { background: #fbecec; color: #d32f2f; } /* Light red */
+.due-text { font-size: 1.2em; margin-top: 5px; }
+
+/* --- Profile Section Modernization (Read-Only) --- */
+.profile-header-modern {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ecf0f1;
+}
+.profile-pic-large {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    object-fit: cover;
+    border: 4px solid #3498db;
+}
+#profile-display-hostel {
+    color: #7f8c8d;
+    font-size: 1em;
+}
+.read-only-note {
+    margin-top: 20px;
+    padding: 10px;
+    background: #fcf8e3;
+    border-left: 4px solid #f0ad4e;
+    color: #8a6d3b;
+    font-size: 0.9em;
+    border-radius: 4px;
+}
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 30px;
+}
+.detail-item {
+    padding: 8px 0;
+    border-bottom: 1px dotted #ccc;
+}
+
+/* --- Forms, Inputs, and Buttons --- */
+.form-card, .payment-card {
+    max-width: 700px;
+    margin-top: 15px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.form-row {
+    margin-bottom: 15px;
+}
+.form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+input[type="text"], input[type="date"], textarea, .payment-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+input[type="text"]:focus, input[type="date"]:focus, textarea:focus, .payment-select:focus {
+    border-color: #3498db;
+    outline: none;
+}
+.required-field {
+    color: #dc3545;
+}
+.btn-submit, .btn-pay {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+.btn-submit:hover, .btn-pay:hover {
+    background: #2980b9;
+}
+.btn-external-link {
+    display: inline-flex;
+    align-items: center;
+    background: #e67e22; /* Orange for external links/warnings */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.btn-external-link i { margin-right: 8px; }
+
+
+/* --- Payment Section Improvements --- */
+.payment-divider {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+.due-amount {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 20px;
+}
+.receipt-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.receipt-item span {
+    font-weight: bold;
+    color: #27ae60; /* Green for success */
+}
+.receipt-item button {
+    background: #2980b9;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.receipt-item button:hover {
+    background: #2c3e50;
+}
+
+
+/* --- Food Table & Static Info --- */
+.menu-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+.menu-table th, .menu-table td {
+    border: 1px solid #eee;
+    padding: 12px;
+    text-align: left;
+}
+.menu-table th {
+    background-color: #f2f2f2;
+}
+
+.request-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.static-info h3 { margin-top: 15px; color: #3498db; }
+.static-info ul { list-style-type: disc; margin-left: 20px; padding: 10px 0; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Add these styles to the bottom of your existing css/student_style.css file */
+
+.payment-form-group {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px dashed #ddd;
+    border-radius: 6px;
+    background: #f7f7f7;
+}
+
+.payment-form-group input[type="text"] {
+    margin-bottom: 10px;
+}
+
+.payment-form-group h5.sub-heading {
+    font-size: 1em;
+    color: #3498db;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Hostel Portal</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="student.css"> 
+</head>
+<body id="student-page">
+    <header class="top-header">
+        <h1 id="header-student-name">Welcome, Student Name</h1>
+        <div class="header-actions">
+            <span class="notification-icon" id="notification-bell"><i class='bx bxs-bell' ></i></span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="profile-summary">
+                <img src="placeholder_profile.png" alt="Profile Picture" class="profile-pic-sidebar">
+                <h4 id="sidebar-student-name">John Doe</h4>
+                <p id="sidebar-student-year" class="text-secondary">2nd Year | Boys Hostel</p>
+            </div>
+            <ul>
+                <li class="active" data-section="home"><i class='bx bxs-dashboard'></i> Dashboard</li>
+                <li data-section="profile"><i class='bx bxs-user-detail'></i> My Profile</li>
+                <li data-section="payment"><i class='bx bxs-wallet'></i> Fee Payment</li>
+                <li data-section="leave"><i class='bx bxs-calendar-event'></i> Leave Request</li>
+                <li data-section="food"><i class='bx bxs-bowl-hot'></i> Food Menu</li>
+                <li data-section="feedback"><i class='bx bxs-message-dots'></i> Feedback / Requests</li>
+                <li data-section="rules"><i class='bx bxs-file-doc'></i> Rules & Facilities</li>
+                <li data-section="antiragging"><i class='bx bxs-shield-alt-2'></i> **Anti-Ragging Form**</li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            
+            <section id="home" class="content-section active">
+                <h2>Dashboard Overview 🏡</h2>
+                <div class="stat-grid">
+                    <div class="stat-card room"><i class='bx bxs-key'></i> Room: 101</div>
+                    <div class="stat-card year"><i class='bx bxs-graduation'></i> Year: 2nd</div>
+                    <div class="stat-card due"><i class='bx bxs-dollar-circle'></i> Fee Status: <span class="due-text">Due</span></div>
+                </div>
+            </section>
+
+            <section id="profile" class="content-section hidden">
+                <h2>My Profile Details 👤</h2>
+                <div class="profile-header-modern">
+                    <img src="placeholder_profile.png" alt="Profile Picture" class="profile-pic-large">
+                    <div>
+                        <h3 id="profile-display-name">John Doe</h3>
+                        <p id="profile-display-hostel">Boys Hostel | Room 101</p>
+                    </div>
+                </div>
+                
+                <h4 class="details-heading">Personal & Hostel Information (Read-Only)</h4>
+                <div class="profile-details-grid">
+                    <div class="detail-item"><strong>Email:</strong> john.doe@gmail.com</div>
+                    <div class="detail-item"><strong>Contact No:</strong> 9876543210</div>
+                    <div class="detail-item"><strong>Father's Name:</strong> Michael Doe</div>
+                    <div class="detail-item"><strong>Parent's Contact:</strong> 9988776655</div>
+                    <div class="detail-item"><strong>Year of Study:</strong> 2nd Year</div>
+                    <div class="detail-item"><strong>Hostel Allotment Date:</strong> 12 Aug 2024</div>
+                </div>
+                <p class="read-only-note">Note: Profile information is read-only. Contact admin for corrections.</p>
+            </section>
+
+           <section id="payment" class="content-section hidden">
+    <h2>Hostel Fee Payment 💳</h2>
+    <div class="payment-card">
+        <p class="due-amount">Outstanding Fee: <span id="fee-amount">$5000</span></p>
+        
+        <h4 class="details-heading">1. Select Payment Method</h4>
+        <label>Fee Year/Term:</label>
+        <select class="payment-select" id="fee-term">
+            <option>2024-2025 (Annual)</option>
+            <option>2025 Spring Term</option>
+        </select>
+
+        <label>Choose Method:</label>
+        <select class="payment-select" id="payment-method-select" onchange="togglePaymentInputs()">
+            <option value="none">-- Select an Option --</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="upi">UPI (GPay / PhonePe / BHIM)</option>
+            <option value="netbanking">Net Banking</option>
+        </select>
+
+        <div id="card-inputs" class="payment-form-group hidden">
+            <h5 class="sub-heading">Card Details</h5>
+            <input type="text" placeholder="Card Number (16 digits)" maxlength="16" required>
+            <div class="form-row" style="display: flex; gap: 10px;">
+                <input type="text" placeholder="MM/YY" style="width: 50%;" maxlength="5" required>
+                <input type="text" placeholder="CVV" style="width: 50%;" maxlength="3" required>
+            </div>
+            <input type="text" placeholder="Card Holder Name" required>
+        </div>
+
+        <div id="upi-inputs" class="payment-form-group hidden">
+            <h5 class="sub-heading">UPI ID / App</h5>
+            <div class="form-row" style="display: flex; gap: 10px; margin-bottom: 5px;">
+                <label style="width: 30%; font-weight: normal;">Select App:</label>
+                <select style="width: 70%;" id="upi-app">
+                    <option>GPay</option>
+                    <option>PhonePe</option>
+                    <option>Paytm</option>
+                    <option>BHIM UPI</option>
+                </select>
+            </div>
+            <input type="text" placeholder="Enter UPI ID (e.g., name@bank)" required>
+        </div>
+        
+        <button class="btn-pay" onclick="simulatePayment()">Proceed to Pay</button>
+
+        <hr class="payment-divider">
+        
+        <h4 class="details-heading">2. Payment History & Receipts</h4>
+        <div id="receipt-area">
+            <p class="text-secondary">No recent payments found.</p>
+        </div>
+
+    </div>
+</section>
+
+            <section id="leave" class="content-section hidden">
+                <h2>Apply for Leave ✈️</h2>
+                <form id="leave-form" class="form-card">
+                    <div class="form-row">
+                        <label>Date Range (2 days max):</label>
+                        <input type="date" id="leave-from" required> to <input type="date" id="leave-to" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Reason for Leave:</label>
+                        <input type="text" id="leave-reason" placeholder="e.g., Family event, Medical emergency" required oninput="checkMedicalProof()">
+                    </div>
+                    
+                    <div id="medical-upload-area" class="form-row hidden">
+                        <label class="required-field">Medical Proof (Required):</label>
+                        <input type="file" accept=".pdf,.jpg" required>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Submit Leave Request</button>
+                </form>
+                <div class="status-box">Current Request Status: <span id="leave-status-text">No active requests</span></div>
+            </section>
+
+            <section id="food" class="content-section hidden">
+                <h2>Weekly Mess Menu 🍲</h2>
+                <table class="menu-table">
+                    <thead>
+                        <tr><th>Day</th><th>Morning</th><th>Lunch</th><th>Dinner</th></tr>
+                    </thead>
+                    <tbody id="menu-display">
+                        </tbody>
+                </table>
+            </section>
+            
+            <section id="feedback" class="content-section hidden">
+                <h2>Feedback & Special Requests ✉️</h2>
+                <div class="request-grid">
+                    <div class="form-card">
+                        <h3>Hostel Feedback</h3>
+                        <input type="text" placeholder="Your Email">
+                        <textarea placeholder="Your feedback..."></textarea>
+                        <button class="btn-submit">Submit Feedback</button>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h3>Hostel/Room Requests</h3>
+                        <label>Request Type:</label>
+                        <select id="special-request-type">
+                            <option value="change_room">Change Room Request</option>
+                            <option value="leave_hostel">Permanent Leave Hostel</option>
+                        </select>
+                        <textarea placeholder="Reason for the request..." required></textarea>
+                        <button class="btn-submit">Submit Special Request</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rules" class="content-section hidden">
+                <h2>Hostel Rules & Facilities ℹ️</h2>
+                <div class="static-info">
+                    <h3>General Rules</h3>
+                    <ul>
+                        <li>Quiet hours are from 10 PM to 6 AM.</li>
+                        <li>No food preparation allowed in rooms.</li>
+                    </ul>
+                    <h3>Facilities Available</h3>
+                    <ul>
+                        <li>Gym Access (6 AM - 8 PM)</li>
+                        <li>RO Water Filter on every floor.</li>
+                        <li>Common Room with TV.</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="antiragging" class="content-section hidden">
+                <h2>Anti-Ragging Declaration (Mandatory for 1st Year) 🛡️</h2>
+                <div class="form-card">
+                    <p>As per institutional policy, all students must acknowledge and submit the anti-ragging declaration.</p>
+                    
+                    <h4 class="details-heading">Option 1: Fill External Google Form (Official Link)</h4>
+                    <a href="https://forms.google.com/your-official-antiragging-link" target="_blank" class="btn-external-link">
+                        <i class='bx bx-link-external'></i> Open Anti-Ragging Google Form
+                    </a>
+                    
+                    <h4 class="details-heading">Option 2: Declaration (Local Mock)</h4>
+                    <p>I hereby confirm that I have read and understood the rules regarding ragging and commit to non-participation.</p>
+                    <div class="form-row">
+                        <input type="checkbox" id="declaration-check"> 
+                        <label for="declaration-check">I Agree to the Declaration</label>
+                    </div>
+                    <button class="btn-submit">Submit Local Declaration</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+    <script src="student.js"></script>
+</body>
+</html>
