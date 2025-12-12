@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperAdmin Dashboard - Hostel Management</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="staff.css"> 
+</head>
+<body id="admin-page">
+    
+    <header class="top-header">
+        <h1 id="admin-role-display">SuperAdmin Dashboard</h1>
+        <div class="header-actions">
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <ul>
+                <li class="active" data-section="home"><i class='bx bxs-dashboard'></i> Dashboard</li>
+                <li data-section="student-info"><i class='bx bxs-group'></i> Student Info</li>
+                <li data-section="payment-details"><i class='bx bxs-credit-card'></i> Payment Details</li>
+                <li data-section="requests-feedback"><i class='bx bxs-envelope'></i> Requests & Feedback</li>
+                <li data-section="room-management"><i class='bx bxs-home-alt-2'></i> Room Management</li>
+                <li data-section="food-edit"><i class='bx bxs-food-menu'></i> Edit Food Menu</li>
+                <li data-section="rules-edit"><i class='bx bxs-edit-alt'></i> Edit Rules</li>
+                <li data-section="staff-info"><i class='bx bxs-user-badge'></i> Staff/Guard Info</li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            
+          <section id="home" class="content-section active">
+                <h2>Welcome, <span id="admin-role-welcome">Super Staff</span> 👋</h2>
+                <p>Quick overview of hostel statistics. Use the sidebar for management tasks.</p>
+
+                <div class="stat-grid dashboard-stat-grid">
+                    <div class="stat-card total-students"><i class='bx bxs-group'></i> Total Students: <span id="dashboard-total-students">0</span></div>
+                    <div class="stat-card total"><i class='bx bxs-building-house'></i> Total Rooms: <span id="dashboard-total-rooms">0</span></div>
+                    <div class="stat-card filled"><i class='bx bxs-user-check'></i> Occupied Rooms: <span id="dashboard-filled-rooms">0</span></div>
+                    <div class="stat-card vacant"><i class='bx bxs-bed'></i> Vacant Rooms: <span id="dashboard-vacant-rooms">0</span></div>
+                </div>
+                
+                <h3 class="details-heading">Quick Actions</h3>
+                <div class="quick-actions-grid">
+                    <button class="action-btn quick-action-btn" onclick="showSection('student-info')">View Student Info</button>
+                    <button class="action-btn quick-action-btn" onclick="showSection('requests-feedback')">Review Requests</button>
+                    <button class="action-btn quick-action-btn" onclick="showSection('food-edit')">Update Food Menu</button>
+                </div>
+            </section>
+
+            
+
+           <section id="student-info" class="content-section hidden">
+                <h2>Student Information (All Years) 🧑‍🎓</h2>
+                
+                <div class="action-bar">
+                    <button class="btn-submit add-student-btn" onclick="showAddStudentForm()">+ Add New Student</button>
+                    <div class="filter-controls">
+                        <select id="year-filter" onchange="loadStudentData(localStorage.getItem('currentUserRole') || 'SuperAdmin')">
+                            <option value="all">Filter by Year (All Students)</option>
+                            <option value="1st">1st Year</option>
+                            <option value="2nd">2nd Year</option>
+                            <option value="3rd">3rd Year</option>
+                            <option value="4th">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="add-student-form-container" class="form-card hidden">
+                    <h3 class="details-heading">Enter New Student Details</h3>
+                    <form id="new-student-form">
+                        <div class="form-row modal-grid">
+                            <div>
+                                <label>Student Name:</label>
+                                <input type="text" id="new-name" required placeholder="Full Name">
+                            </div>
+                            <div>
+                                <label>Student ID (Unique):</label>
+                                <input type="text" id="new-id" required placeholder="e.g., S4001">
+                            </div>
+                            <div>
+                                <label>Year:</label>
+                                <select id="new-year" required>
+                                    <option value="1st">1st Year</option>
+                                    <option value="2nd">2nd Year</option>
+                                    <option value="3rd">3rd Year</option>
+                                    <option value="4th">4th Year</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Hostel:</label>
+                                <select id="new-hostel" required>
+                                    <option value="Boys">Boys</option>
+                                    <option value="Girls">Girls</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row modal-grid">
+                             <div>
+                                <label>Room No:</label>
+                                <input type="text" id="new-room" required placeholder="e.g., 205B">
+                            </div>
+                            <div>
+                                <label>Contact No:</label>
+                                <input type="text" id="new-contact" required placeholder="10-digit number">
+                            </div>
+                        </div>
+                        
+                        <label>Parent/Guardian Name:</label>
+                        <input type="text" id="new-parent" required placeholder="Parent's Full Name">
+                        
+                        <label>Address:</label>
+                        <textarea id="new-address" rows="2" required placeholder="Permanent Address"></textarea>
+
+                        <button type="submit" class="btn-submit">Save New Student</button>
+                        <button type="button" class="btn-submit reject" onclick="hideAddStudentForm()">Cancel</button>
+                    </form>
+                </div>
+                <table class="data-table student-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Year</th>
+                            <th>Room No</th>
+                            <th>Parent/Contact</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="student-data-body">
+                        </tbody>
+                </table>
+            </section>
+
+            <section id="payment-details" class="content-section hidden">
+                <h2>Payment Details & Dues 💸</h2>
+                <p>All payment data, including date, due payment, and payment amount, is fetched here.</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Last Payment Date</th>
+                            <th>Amount Paid</th>
+                            <th>Due Status</th>
+                            <th>Receipt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </section>
+            
+            <section id="requests-feedback" class="content-section hidden">
+                <h2>Requests & Feedback Management 📧</h2>
+
+                <h3 class="details-heading">Leave Requests</h3>
+                <table class="data-table request-table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Dates</th>
+                            <th>Reason (Medical Proof)</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leave-request-body">
+                        </tbody>
+                </table>
+                
+                <h3 class="details-heading">Change Room / Leave Hostel Requests</h3>
+                <div id="special-requests-list">
+                    </div>
+                
+                <h3 class="details-heading">General Feedback</h3>
+                <div id="general-feedback-list">
+                    </div>
+            </section>
+
+            <section id="room-management" class="content-section hidden">
+                <h2>Room Statistics & Allocation 🔑</h2>
+                <div class="stat-grid">
+                    <div class="stat-card total"><i class='bx bxs-building-house'></i> Total Rooms: <span id="total-rooms"></span></div>
+                    <div class="stat-card filled"><i class='bx bxs-user-check'></i> Filled Rooms: <span id="filled-rooms"></span></div>
+                    <div class="stat-card vacant"><i class='bx bxs-bed'></i> Vacant Rooms: <span id="vacant-rooms"></span></div>
+                    <div class="stat-card pending"><i class='bx bxs-hourglass-top'></i> Pending Allotment: <span id="pending-rooms"></span></div>
+                </div>
+                
+             <h3 class="details-heading">Room Modification (Allocate/Modify)</h3>
+                <div class="form-card">
+                    <form id="room-modify-form">
+                        <label>Student ID:</label>
+                        <input type="text" id="modify-student-id" placeholder="Enter student ID" required>
+                        <label>New Room No:</label>
+                        <input type="text" id="modify-new-room" placeholder="e.g., 205" required>
+                        <button type="submit" class="btn-submit">Update Room</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="food-edit" class="content-section hidden">
+                <h2>Weekly Food Menu Editor ✍️</h2>
+                <p>Edit the menu below. Changes will be instantly visible to students.</p>
+                <table class="data-table menu-editor-table">
+                    <thead>
+                        <tr><th>Day</th><th>Morning</th><th>Lunch</th><th>Dinner</th></tr>
+                    </thead>
+                    <tbody id="menu-editor-body">
+                        </tbody>
+                </table>
+                <button class="btn-submit" onclick="saveFoodMenu()">Save Menu Changes</button>
+            </section>
+
+            <section id="rules-edit" class="content-section hidden">
+                <h2>Hostel Rules & Regulations Editor ⚖️</h2>
+                <p>Modify and update hostel rules here. These changes are reflected in the Student Section.</p>
+                <div class="form-card">
+                    <h3 class="details-heading">General Rules</h3>
+                    <textarea id="general-rules-text" rows="5">1. Quiet hours are from 10 PM to 6 AM.
+2. No food preparation allowed in rooms.
+3. Visitors must register at the main desk.</textarea>
+                    
+                    <h3 class="details-heading">Facility Information</h3>
+                    <textarea id="facility-info-text" rows="5">Gym Access (6 AM - 8 PM).
+RO Water Filter on every floor.
+Common Room with TV.</textarea>
+
+                    <button class="btn-submit" onclick="saveRules()">Save All Rules</button>
+                </div>
+            </section>
+
+            <section id="staff-info" class="content-section hidden">
+                <h2>Hostel Guard & Staff Facility Information 👨‍✈️</h2>
+                <p>Store and manage contact and role information for all hostel staff and guards.</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Hostel</th>
+                            <th>Contact No.</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staff-data-body">
+                        </tbody>
+                </table>
+                <button class="btn-submit" onclick="addStaffForm()">Add New Staff</button>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="edit-profile-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modal-student-name">Edit Profile: Student Name</h3>
+            <p class="modal-student-id">ID: <span id="modal-student-id-display">SXXXX</span></p>
+
+            <form id="edit-profile-form">
+                <input type="hidden" id="edit-id">
+                
+                <h4 class="details-heading">Hostel & Room Details</h4>
+                <div class="form-row modal-grid">
+                    <div>
+                        <label>Hostel:</label>
+                        <input type="text" id="edit-hostel" required>
+                    </div>
+                    <div>
+                        <label>Room No:</label>
+                        <input type="text" id="edit-room" required>
+                    </div>
+                    <div>
+                        <label>Year:</label>
+                        <select id="edit-year" required>
+                            <option>1st</option>
+                            <option>2nd</option>
+                            <option>3rd</option>
+                            <option>4th</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h4 class="details-heading">Personal & Contact Details</h4>
+                <div class="form-row modal-grid">
+                    <div>
+                        <label>Contact No:</label>
+                        <input type="text" id="edit-contact" required>
+                    </div>
+                    <div>
+                        <label>Parent Name:</label>
+                        <input type="text" id="edit-parent" required>
+                    </div>
+                </div>
+                
+                <label>Address:</label>
+                <textarea id="edit-address" rows="2" required></textarea>
+
+                <button type="submit" class="btn-submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="staff.js"></script>
+</body>
+</html>

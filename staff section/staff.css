@@ -1,0 +1,228 @@
+/*
+ * Admin Dashboard Styles (admin_style.css) - MODERN LOOK
+ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body#admin-page {
+    background-color: #f0f2f5; /* Very light background for modern feel */
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+.dashboard-container {
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+.hidden { display: none !important; }
+
+/* --- Top Header --- */
+.top-header {
+    background: #ffffff; /* White header */
+    color: #2c3e50;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+.logout-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.logout-btn:hover { background: #c0392b; }
+
+/* --- Sidebar Navigation (Clean White) --- */
+.sidebar {
+    width: 250px;
+    background: #ffffff;
+    box-shadow: 1px 0 5px rgba(0, 0, 0, 0.05);
+    padding-top: 20px;
+    border-right: 1px solid #eee;
+}
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar li {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
+    color: #555;
+    transition: all 0.2s;
+    font-size: 0.95em;
+}
+.sidebar li i { margin-right: 10px; font-size: 20px; color: #7f8c8d; }
+.sidebar li:hover, .sidebar li.active {
+    background: #ecf0f1;
+    color: #3498db; 
+}
+.sidebar li.active {
+    border-left: 4px solid #3498db;
+    font-weight: 600;
+}
+.sidebar li.active i { color: #3498db; }
+
+/* --- Main Content Area (Card Based) --- */
+.main-content {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+.content-section {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+.content-section h2 {
+    color: #3498db;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+.details-heading {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+/* --- Data Tables --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+.data-table th, .data-table td {
+    border: 1px solid #eee;
+    padding: 12px 15px;
+    text-align: left;
+}
+.data-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #444;
+}
+.data-table tr:hover {
+    background-color: #fcfdff;
+}
+
+/* --- Form Elements & Buttons --- */
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    outline: none;
+}
+.btn-submit {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+.btn-submit:hover { background: #2980b9; }
+
+/* --- Stat Grid & Cards --- */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+.stat-card {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.1em;
+}
+.stat-card i { font-size: 30px; margin-bottom: 5px; }
+.stat-card.total { background: #e8eaf6; color: #3f51b5; }
+.stat-card.filled { background: #e0f2f1; color: #00897b; }
+.stat-card.vacant { background: #fff3e0; color: #ff9800; }
+.stat-card.pending { background: #fbecec; color: #e53935; }
+
+/* --- Action Buttons & Filter --- */
+.action-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    margin-right: 5px;
+    transition: opacity 0.2s;
+}
+.action-btn.accept { background: #27ae60; color: white; }
+.action-btn.reject { background: #e74c3c; color: white; }
+.action-btn.view { background: #3498db; color: white; }
+.action-btn:hover { opacity: 0.8; }
+.filter-controls { margin-bottom: 20px; }
+
+
+/* --- Modal Styles (Editable Student Profile) --- */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 650px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation: slideUp 0.3s ease-out;
+}
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
